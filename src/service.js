@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-// const apiUrl = "http://localhost:5126/todoItems"
-axios.defaults.baseURL="http://localhost:5126/todoItems"
+const apiURL = process.env.REACT_APP_API_URL;
+axios.defaults.baseURL = apiURL;
+
 axios.interceptors.response.use(
   function(response){
     return response;
@@ -13,12 +14,15 @@ axios.interceptors.response.use(
 
 export default {
   getTasks: async () => {
-    const result = await axios.get()
+    console.log("url", apiURL)
+    const result = await axios.get(apiURL)
+    console.log(result.data)
     return result.data;
   },
+ 
 
   addTask: async (newTodo) => {
-    const result = await axios.post(axios.defaults.baseURL, { name: newTodo, isComplete: false})
+    const result = await axios.post(apiURL, { name: newTodo, isComplete: false})
     return result.data;
   },
 
